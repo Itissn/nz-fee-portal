@@ -1,4 +1,5 @@
 # NZ Fee Portal
+This portal is a prototype reference tool. Tuition fees and programme information should always be verified through the official provider links. The extracted fee snapshots are not guaranteed to cover all providers or all programmes.
 
 A prototype Streamlit web app for searching New Zealand tertiary education programme pages, official fee-source links, and extracted fee snapshots.
 
