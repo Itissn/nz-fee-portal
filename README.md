@@ -3,6 +3,12 @@ This portal is a prototype reference tool. Tuition fees and programme informatio
 
 A prototype Streamlit web app for searching New Zealand tertiary education programme pages, official fee-source links, and extracted fee snapshots.
 
+Data version: v1.0
+Last updated: 2026-05-19
+Programme entries: 2405
+Official fee sources: 47
+Extracted fee snapshots: 1355
+
 ## What this app includes
 
 - Programme searchable entries: **2405**
