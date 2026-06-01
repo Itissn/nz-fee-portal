@@ -271,7 +271,7 @@ def dataframe_with_links(df: pd.DataFrame, link_cols: list[str], height: int = 5
 def main() -> None:
     st.set_page_config(page_title="NZ Fee Portal", layout="wide")
 
-    st.title("NZ Fee Portal")
+    st.title("NZ Fee Reference Portal")
     st.caption(
         "Programme-aware fee reference portal. Programme pages usually do not have Domestic/International labels, "
         "so Student type filters fee sources and fee snapshots, and attaches matching fee links to programme results."
