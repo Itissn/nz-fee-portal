@@ -1,3 +1,7 @@
+## Project Overview
+
+This project provides a public Streamlit-based portal for browsing and searching New Zealand programme fee information collected from public university sources.
+
 # NZ Fee Portal
 This portal is a prototype reference tool. Tuition fees and programme information should always be verified through the official provider links. The extracted fee snapshots are not guaranteed to cover all providers or all programmes.
 
