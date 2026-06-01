@@ -33,3 +33,7 @@ jobs:
           test -f app/streamlit_app.py
           test -f requirements.txt
           test -f README.md
+      
+      - name: Run tests
+        run: |
+          pytest
