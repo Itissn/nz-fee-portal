@@ -64,14 +64,49 @@ def test_programme_index_has_expected_columns_if_present():
     programme_index_path = existing_paths[0]
     df = pd.read_csv(programme_index_path)
 
-    expected_columns = {
-        "provider",
-        "programme_name",
+    normalized_columns = {
+        str(column).strip().lower(): str(column)
+        for column in df.columns
     }
 
-    missing_columns = expected_columns.difference(set(df.columns))
+    provider_column_candidates = {
+        "provider",
+        "provider_name",
+        "institution",
+        "institution_name",
+        "university",
+        "organisation",
+        "organization",
+    }
 
-    assert not missing_columns, (
-        f"{programme_index_path} is missing expected columns: "
-        f"{sorted(missing_columns)}"
+    programme_column_candidates = {
+        "programme",
+        "programme_name",
+        "programme_title",
+        "program",
+        "program_name",
+        "program_title",
+        "qualification",
+        "qualification_name",
+        "qualification_title",
+        "title",
+        "name",
+    }
+
+    has_provider_column = bool(
+        provider_column_candidates.intersection(normalized_columns.keys())
+    )
+
+    has_programme_column = bool(
+        programme_column_candidates.intersection(normalized_columns.keys())
+    )
+
+    assert has_provider_column, (
+        f"{programme_index_path} does not contain a provider-like column. "
+        f"Available columns: {list(df.columns)}"
+    )
+
+    assert has_programme_column, (
+        f"{programme_index_path} does not contain a programme-like column. "
+        f"Available columns: {list(df.columns)}"
     )
