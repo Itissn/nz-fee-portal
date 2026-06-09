@@ -1,0 +1,7 @@
+
+# Streamlit local settings and secrets
+.streamlit/
+.streamlit/*
+
+# Local backup files
+*_backup.py
