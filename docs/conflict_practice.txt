@@ -1,2 +1,2 @@
 Conflict practice file
-Status: main version
+Status: resolved version
