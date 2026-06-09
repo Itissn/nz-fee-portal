@@ -1,2 +1,2 @@
 Conflict practice file
-Status: original
+Status: branch version
