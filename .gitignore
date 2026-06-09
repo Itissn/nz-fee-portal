@@ -32,3 +32,6 @@ Thumbs.db
 # IDE/editor files
 .vscode/
 .idea/
+
+# Local generated database
+local_db/
