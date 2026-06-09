@@ -6,7 +6,8 @@ import sys
 from pathlib import Path
 
 
-ROOT_DIR = Path(__file__).resolve().parents[1]
+SCRIPT_DIR = Path(__file__).resolve().parent
+ROOT_DIR = SCRIPT_DIR.parent
 
 if str(ROOT_DIR) not in sys.path:
     sys.path.insert(0, str(ROOT_DIR))
@@ -41,6 +42,7 @@ def build_database(
     Build a SQLite database from the programme index CSV file.
     """
     logger.info("Starting SQLite database build")
+    logger.info("Root directory: %s", ROOT_DIR)
     logger.info("CSV path: %s", csv_path)
     logger.info("Database path: %s", db_path)
     logger.info("Table name: %s", table_name)
