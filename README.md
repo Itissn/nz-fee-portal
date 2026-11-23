@@ -14,8 +14,9 @@ Search New Zealand tertiary programmes and inspect the historical fee evidence f
 flowchart LR
     CSV[Three saved CSV snapshots] --> V[Validate and record quality findings]
     V -->|One transaction| DB[(SQLite catalogue)]
-    DB -->|Parameterized SQL| UI[Streamlit search and downloads]
-    UI -->|Select a programme| E[Fee evidence and provider links]
+    UI[Streamlit search] -->|Parameterized SQL query| DB
+    DB -->|Matching records and source links| UI
+    UI -->|Display or download| E[Search results]
     DB --> R[Quality report]
 ```
 
