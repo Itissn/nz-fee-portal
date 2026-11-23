@@ -2,6 +2,8 @@
 
 Search New Zealand tertiary programmes and inspect the historical fee evidence for a specific programme, cohort and year. Each result includes a provider link and the recorded check date. Built with Python, SQLite, pandas and Streamlit.
 
+[Open the live NZ Fee Portal](https://nz-fee-reference.streamlit.app/). If Streamlit says the app is asleep, choose **Yes, get this app back up!** and wait for the search page.
+
 ## Try a search
 
 1. Choose **Lincoln University**, enter **agriculture**, select **Domestic** and enter **2026**.
