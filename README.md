@@ -1,72 +1,64 @@
 # NZ Fee Portal
 
-Make New Zealand tertiary programme and fee-source information easier to find and assess through a shared reference catalogue.
+Search New Zealand tertiary programmes and inspect the historical fee evidence for a specific programme, cohort and year. Each result includes a provider link and the recorded check date. Built with Python, SQLite, pandas and Streamlit.
 
-## Why this project?
+## Try a search
 
-Programme and fee information is distributed across provider websites. Bringing records together helps discovery, but a combined table can still have uneven coverage, unclear classifications and historical prices. Before using it for comparison, a reader needs to know both where a record came from and what the dataset can support.
+1. Choose **Lincoln University**, enter **agriculture**, select **Domestic** and enter **2026**.
+2. Under **Find a programme**, inspect **Bachelor of Agriculture**. The saved source records **NZ$8,690 per 120 points**, checked **14 May 2026**. Open the fee-source link to confirm today's fee.
+3. Change the fee year to **2100**. The programme remains searchable, the app explains the missing fee evidence, and its provider programme page remains available. Provider-wide sources appear separately when they satisfy the selected filters.
 
-The objective of this prototype is to let a prospective student or analyst **find relevant programmes and provider sources in one catalogue, then inspect the data quality before further fee analysis**. A complete, current tuition-comparison service remains beyond this release.
+## How it works
 
-## Approach
+```mermaid
+flowchart LR
+    CSV[Three saved CSV snapshots] --> V[Validate and record quality findings]
+    V -->|One transaction| DB[(SQLite catalogue)]
+    DB -->|Parameterized SQL| UI[Streamlit search and downloads]
+    UI -->|Select a programme| E[Fee evidence and provider links]
+    DB --> R[Quality report]
+```
 
-- **Search the saved catalogue:** pandas loads the snapshots into a Streamlit interface with separate programme, official-source and extracted-fee tabs. Provider, study-stage, student-type and year filters help narrow the available records; partial fee coverage remains visible.
-- **Make the records queryable:** a separate loader builds a SQLite table for SQL exploration of the same programme records. The app itself continues to read CSV.
-- **Expose quality and coverage:** a reproducible report counts missing values, classifications and providers. Original-name and transformation-note fields in the supplied snapshot help readers inspect its history.
+The importer checks required fields, source URLs, date formats, amounts, provider identity and duplicates. A hard failure rejects the release and preserves the last working database. Reviewable anomalies stay visible with their source file and CSV line number. The web app reads one committed version for each search.
 
-The repository begins with existing processed CSV snapshots. It does not contain the extraction and cleaning pipeline that originally produced them.
+## Coverage and limits
 
-## Results and evidence
+| Saved input | Records | Providers |
+|---|---:|---:|
+| Programme pages | 2,405 | 66 |
+| Fee reference links | 47 | 24 |
+| Extracted fee records | 1,355 | 6 |
 
-| Output | What can be checked |
-|---|---|
-| Searchable catalogue | 2,405 programme records covering 66 providers; the local interface was run and captured below |
-| SQL analysis input | The database loader successfully imported all 2,405 programme records |
-| Quality finding | 541 records have `Unknown` as their subject area, despite passing ordinary missing-cell checks |
-| Additional reference data | 47 fee-source entries covering 24 providers; 1,355 fee snapshots covering 6 providers |
+Across the bundled snapshots, **55 programme records** have matching fee evidence on the same provider ID and normalised full title. Different majors, fee bases or student groups can produce several matches. Provider coverage flags indicate which institutions have evidence. For dates, flagged extraction issues and input hashes, see the [quality report](reports/data_quality_report.md).
 
-The quality finding matters because **non-empty values are not necessarily usable classifications**. The difference in provider coverage also means programme coverage cannot be treated as fee coverage.
+Inputs were checked in May 2026. The importer refreshes the application from supplied snapshots. Gathering new provider pages is a separate upstream step. Check the original source for current fees and use the displayed fee basis before comparing amounts.
 
-![Actual local programme search interface](assets/programme-search.png)
+## Run and refresh
 
-Evidence: [quality report](reports/data_quality_report.md), [input snapshots and scope](data/README.md), [database loader](scripts/build_database.py) and [tests](tests/). Ten automated tests passed in the 23 November 2026 review; they support the implementation checks, not the accuracy of every provider's information.
-
-## What remains to be established
-
-This release demonstrates catalogue search, SQL loading and quality reporting. It has not measured user search-time savings or verified a complete, current fee comparison. Future work would need the source collection pipeline, consistent fee/year definitions, broader fee coverage and task-based user evaluation. Always check current information with the original provider.
-
-**Implementation:** Python · pandas · SQLite · Streamlit · pytest · GitHub Actions
-
-## Run locally
-
-From the repository root, using your Python environment:
+From the repository root with Python 3.11:
 
 ```bash
 python -m pip install -r requirements.txt
 python -m streamlit run app/streamlit_app.py
 ```
 
-Build the analysis database and regenerate the report:
+On first launch the app imports the three bundled snapshots into `local_db/nz_fee_portal.sqlite`. An earlier programme-only database is upgraded on first launch. To refresh an existing database with an updated, compatible set of CSVs:
 
 ```bash
-python scripts/build_database.py
-python scripts/data_quality_report.py --report-path reports/data_quality_report.md
+python scripts/build_database.py --data-dir data/processed
+python scripts/data_quality_report.py
 python -m pytest -q
 ```
 
-The database builder replaces the local `programme_index` table from the CSV. Keep any separate analysis tables or manual edits in another database.
+Use `--db-path PATH` with the import and report commands for a separate database. Set `NZ_FEE_DB` to that path to use it in the web app. Re-run a search after importing. The application uses the committed database until the next explicit refresh. The importer replaces its own tables and preserves unrelated tables.
 
 ## Repository guide
 
 | Location | Responsibility |
 |---|---|
-| `app/` | Streamlit interface |
-| `src/` | Reusable search and database helpers; public UI filters live in `app/` |
-| `scripts/` | Database build and quality report commands |
-| `examples/` | SQLite inspection and SQL practice |
-| `data/processed/` | Versioned input snapshots |
-| `reports/` | Inspectable data quality outputs |
-| `tests/` | Search, schema and data checks |
-| `.github/workflows/` | Automated checks and report generation |
-
-See [data scope and provenance](data/README.md) and [implementation notes](docs/architecture.md).
+| [app/](app/) | Search interface, programme details and downloads |
+| [src/](src/) | Import rules, SQLite schema and parameterized queries |
+| [scripts/](scripts/) | Import and report commands |
+| [data/](data/) | Saved inputs and provenance |
+| [reports/](reports/) | One reproducible report from the bundled release |
+| [tests/](tests/) | Refresh, rollback, query and interface checks |

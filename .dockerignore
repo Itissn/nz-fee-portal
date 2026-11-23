@@ -1,8 +1,9 @@
-.venv
-.git
-__pycache__
-.pytest_cache
-*.pyc
-*.pyo
-*.pyd
+local_db/
+.git/
+.venv/
+__pycache__/
+.pytest_cache/
+*.py[cod]
 .env
+.env.*
+.streamlit/secrets.toml

@@ -1,102 +1,28 @@
-# NZ Fee Portal Data Quality Report
+# Snapshot quality report
 
-## Overview
+The three input files are identified by SHA-256. Dates are recorded provider checks.
 
-| Metric | Value |
-|---|---:|
-| Total rows | 2405 |
-| Total columns | 20 |
-| Unique providers | 66 |
-| Unique programme names | 2074 |
-| Unknown subject_area count | 541 |
-| Average refined_score | 103.25 |
+| Dataset | Rows | Providers | First check | Last check |
+|---|---:|---:|---|---|
+| programme_index | 2405 | 66 | 2026-05-14 | 2026-05-19 |
+| fee_source_index | 47 | 24 | 2026-05-14 | 2026-05-19 |
+| fee_snapshot | 1355 | 6 | 2026-05-14 | 2026-05-14 |
 
-## Missing Value Summary
+55 programme records have an exact provider-and-name fee match before cohort filters.
+A name match can cover multiple fee bases, majors or student groups.
 
-| column                              |   missing_or_empty_count |   missing_or_empty_rate |
-|:------------------------------------|-------------------------:|------------------------:|
-| provider_id                         |                        0 |                       0 |
-| provider_name                       |                        0 |                       0 |
-| programme_name_before_repair        |                        0 |                       0 |
-| subject_area_before_standardization |                        0 |                       0 |
-| study_stage_before_standardization  |                        0 |                       0 |
-| programme_name_original             |                        0 |                       0 |
-| programme_name_before_normalization |                        0 |                       0 |
-| refined_score                       |                        0 |                       0 |
-| refined_reason                      |                        0 |                       0 |
-| refined_bucket                      |                        0 |                       0 |
-| notes                               |                        0 |                       0 |
-| last_checked                        |                        0 |                       0 |
-| matched_keywords                    |                        0 |                       0 |
-| subject_area                        |                        0 |                       0 |
-| study_stage                         |                        0 |                       0 |
-| programme_link                      |                        0 |                       0 |
-| programme_name                      |                        0 |                       0 |
-| provider_website                    |                        0 |                       0 |
-| provider_type                       |                        0 |                       0 |
-| name_repair_reason                  |                        0 |                       0 |
+| Dataset | Quality finding | Affected rows |
+|---|---|---:|
+| fee_snapshot | currency_in_fee_basis | 163 |
+| fee_snapshot | missing_fee_basis | 502 |
+| fee_snapshot | numeric_programme_name | 472 |
+| fee_source_index | unknown_source_year | 21 |
+| programme_index | unknown_subject | 541 |
 
-## Provider Type Distribution
+A record can have several findings. The Data quality tab lists individual CSV line numbers.
 
-| provider_type                       |   count |
-|:------------------------------------|--------:|
-| Institute of Technology/Polytechnic |    1097 |
-| University                          |    1060 |
-| Private Training Establishment      |     233 |
-| Wananga                             |      15 |
-
-## Study Stage Distribution
-
-| study_stage                                  |   count |
-|:---------------------------------------------|--------:|
-| Certificate                                  |     626 |
-| Bachelor                                     |     439 |
-| Master                                       |     333 |
-| Diploma                                      |     292 |
-| Diploma; Postgraduate                        |     156 |
-| Diploma; Graduate                            |     121 |
-| Certificate; Postgraduate                    |      92 |
-| Certificate; Diploma; Postgraduate           |      70 |
-| Unknown                                      |      69 |
-| Certificate; Graduate                        |      39 |
-| Certificate; English Language                |      34 |
-| Doctoral                                     |      24 |
-| Certificate; Bachelor                        |      16 |
-| Postgraduate; Master                         |      10 |
-| Diploma; Bachelor; Graduate                  |      10 |
-| Certificate; Diploma                         |      10 |
-| Postgraduate                                 |       8 |
-| Bachelor; Master                             |       6 |
-| Certificate; Diploma; Graduate; Postgraduate |       4 |
-| English Language                             |       4 |
-
-## Subject Area Distribution
-
-| subject_area                                            |   count |
-|:--------------------------------------------------------|--------:|
-| Unknown                                                 |     541 |
-| Business / Management                                   |     376 |
-| Creative Arts / Design                                  |     213 |
-| Engineering / Construction                              |     131 |
-| Health                                                  |     130 |
-| Health; Science                                         |     122 |
-| Education                                               |     121 |
-| Science                                                 |     113 |
-| Computing / IT                                          |      64 |
-| Education; Creative Arts / Design                       |      61 |
-| Hospitality / Tourism                                   |      57 |
-| Engineering / Construction; Creative Arts / Design      |      54 |
-| Trades / Primary Industries                             |      46 |
-| Law / Social Sciences                                   |      44 |
-| Engineering / Construction; Trades / Primary Industries |      34 |
-| Business / Management; Hospitality / Tourism            |      31 |
-| Business / Management; Health                           |      26 |
-| Computing / IT; Engineering / Construction; Science     |      15 |
-| Business / Management; Creative Arts / Design           |      15 |
-| Business / Management; Engineering / Construction       |      13 |
-
-## Refined Bucket Distribution
-
-| refined_bucket   |   count |
-|:-----------------|--------:|
-| clean            |    2405 |
+| Source CSV | SHA-256 |
+|---|---|
+| fee_snapshot.csv | `90d6cb56a6c99a48c33d3e663a21311317e0f134e7df5bb335de05d70f98d3c6` |
+| fee_source_index.csv | `2ecc140c3a32f2c9024a8615b8f02d771df6b2f8eb0dee2e8b10b006d0fc58e6` |
+| programme_index.csv | `f2834073daf0782ed051d94c8a8f19f0b6cd069d24dd31076923d8e17ff1b75d` |
