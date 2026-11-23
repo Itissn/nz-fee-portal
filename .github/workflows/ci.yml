@@ -33,7 +33,22 @@ jobs:
           test -f app/streamlit_app.py
           test -f requirements.txt
           test -f README.md
-      
+          test -f data/processed/programme_index.csv
+
       - name: Run tests
         run: |
           pytest
+
+      - name: Build SQLite database
+        run: |
+          python scripts/build_database.py
+
+      - name: Generate data quality report
+        run: |
+          python scripts/data_quality_report.py --report-path reports/ci_data_quality_report.md
+
+      - name: Upload data quality report
+        uses: actions/upload-artifact@v4
+        with:
+          name: data-quality-report
+          path: reports/ci_data_quality_report.md

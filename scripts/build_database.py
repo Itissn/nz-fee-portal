@@ -15,7 +15,7 @@ if str(ROOT_DIR) not in sys.path:
 from src.db_utils import get_table_columns, load_csv_to_sqlite
 
 
-DEFAULT_CSV_PATH = ROOT_DIR / "data" / "output" / "programme_index.csv"
+DEFAULT_CSV_PATH = ROOT_DIR / "data" / "processed" / "programme_index.csv"
 DEFAULT_DB_PATH = ROOT_DIR / "local_db" / "nz_fee_portal.sqlite"
 DEFAULT_TABLE_NAME = "programme_index"
 

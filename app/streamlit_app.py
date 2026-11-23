@@ -5,9 +5,9 @@ NZ Fee Portal public Streamlit app.
 
 Expected repository structure:
     app/streamlit_app.py
-    data/output/programme_index.csv
-    data/output/fee_source_index.csv
-    data/output/fee_snapshot.csv
+    data/processed/programme_index.csv
+    data/processed/fee_source_index.csv
+    data/processed/fee_snapshot.csv
 """
 
 from __future__ import annotations
@@ -21,7 +21,7 @@ import streamlit as st
 
 
 ROOT = Path(__file__).resolve().parents[1]
-DATA_DIR = ROOT / "data" / "output"
+DATA_DIR = ROOT / "data" / "processed"
 
 PROGRAMME_FILE = DATA_DIR / "programme_index.csv"
 FEE_SOURCE_FILE = DATA_DIR / "fee_source_index.csv"

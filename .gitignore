@@ -39,3 +39,9 @@ Thumbs.db
 # IDE/editor files
 .vscode/
 .idea/
+
+# Generated local databases
+local_db/
+db/*.sqlite
+*.sqlite-wal
+*.sqlite-shm

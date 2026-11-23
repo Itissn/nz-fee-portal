@@ -53,7 +53,7 @@ def test_csv_files_do_not_have_empty_column_names():
 def test_programme_index_has_expected_columns_if_present():
     possible_paths = [
         DATA_DIR / "programme_index.csv",
-        DATA_DIR / "output" / "programme_index.csv",
+        DATA_DIR / "processed" / "programme_index.csv",
     ]
 
     existing_paths = [path for path in possible_paths if path.exists()]
